@@ -5,17 +5,20 @@ import Login from "./pages/Login";
 import Home from "./pages/Home";
 
 
+import { DataProvider } from'./context/DataContext';
 
 const Stack = createNativeStackNavigator();
 
 const App = () => {
   return (
+    <DataProvider>
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="Login">
+      <Stack.Navigator screenOptions={{HeadersShown:true}} initialRouteName="Login">
         <Stack.Screen name="LoginScreen" component={Login} />
         <Stack.Screen name="HomeScreen" component={Home} />
       </Stack.Navigator>
     </NavigationContainer>
+    </DataProvider>
   );
 }
 

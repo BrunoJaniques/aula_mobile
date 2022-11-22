@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState,useContext ,useEffect} from 'react';
 import {
   View,
   Text,
@@ -6,20 +6,34 @@ import {
   TouchableOpacity,
   Alert
 } from 'react-native';
-
-import { styles } from '../Home/styles';
-import { NativeScreenContainer } from 'react-native-screens';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
-
+import axiosInstance from '../../api/AxiosInstance';
+import { DataContext } from '../../context/DataContext';
+import { DadosEditoraType } from '../../models/DadosEditoraTaype';
 const Home = () =>{
-    function HomeScreen({navigation}){
+
+  const{dadosUsuario} = useContext(DataContext);
+ const[dadosEditora,setDadosEditora]=useState<DadosEditoraType[]>([]);
+
+  useEffect(()=> {
+    getAllEditoras();
+  },[]);
+
+  const getAllEditoras = async () => {
+    axiosInstance.get(
+      '/editoras',
+      {headers: {"Authorization" : `Bearer ${dadosUsuario?.token}`}}
+    ).then(resultado => {
+      console.log('Dados das editoras: ' + resultado.data);
+      setDadosEditora(resultado.data);
+    }).catch((error)=>{
+      console.log('Ocorreu um erro ao recuperar os dados das Editoras :' JSON.stringify(error))
+    });
+    
+  }
     return(
-        <view style={{flex:1,alingItens:'center',justifyContent:'center'}}>
-            <text>{'Home'}</text>
-            <button
-                title='Go to Details'
-                onProgress={() =>navigation.navigate('Details')}
-                />
+        <view >
+            <text>{'home'}</text>
+            <text>Bem-Vindo,{dadosUsuario?.nome}</text>
         </view>
 
     );
