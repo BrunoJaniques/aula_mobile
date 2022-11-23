@@ -44,6 +44,12 @@ const Home = () => {
     });
   }
 
+  const navigateToEditoraHome= (id:any) =>{
+    setSelectedId(id);
+    navigation.navigate('');
+  }
+
+
   const renderItem = ({ item }) => {
     const backgroundColor = item.codigoEditora === selectedId ? "#6e3b6e" : "#f9c2ff";
     const color = item.codigoEditora === selectedId ? 'white' : 'black';
@@ -51,7 +57,7 @@ const Home = () => {
     return (
       <Item
         item={item}
-        eventoPressionarBotao={() => setSelectedId(item.codigoEditora)}
+        eventoPressionarBotao={() => navigateToEditoraHome(item.codigoEditora)}
         backgroundColor={{ backgroundColor }}
         textColor={{ color }}
       />
