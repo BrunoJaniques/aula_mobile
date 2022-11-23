@@ -6,7 +6,7 @@ import {
 
 const HomeEditoras = () => {
   <View>
-    <Text>Home Editoras</Text>
+    <Text>Home Editorasss</Text>
   </View>
 }
 
