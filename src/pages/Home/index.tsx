@@ -22,13 +22,17 @@ const Item = ({ item, eventoPressionarBotao, backgroundColor, textColor }) => (
   </TouchableOpacity>
 );
 
-const Home = () => {
+const Home = ({navigation}) => {
 
   const {dadosUsuario} = useContext(DataContext);
   const [dadosEditora, setDadosEditora] = useState<DadosEditoraType[]>([]);
   const [selectedId, setSelectedId] = useState(null);
 
   useEffect(() => {
+    const stackNavigator = navigation.getParent();
+    if(stackNavigator){
+      stackNavigator.setOptions({ title: `Bem-vindo, ${dadosUsuario.nome}`});
+    }
     getAllEditoras();
   },[]);
 
@@ -44,11 +48,13 @@ const Home = () => {
     });
   }
 
-  const navigateToEditoraHome= (id:any) =>{
+  const navigateToEditoraHome = (id:any) => {
     setSelectedId(id);
-    navigation.navigate('');
-  }
 
+    navigation.navigate('HomeEditoraScreen', {
+      editoraId: id,
+    });
+  }
 
   const renderItem = ({ item }) => {
     const backgroundColor = item.codigoEditora === selectedId ? "#6e3b6e" : "#f9c2ff";
@@ -88,7 +94,6 @@ const styles = StyleSheet.create({
     width:120,
     height:120,
     justifyContent:'center',
-  
   },
   title: {
     fontSize: 32,
